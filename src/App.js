@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {useState} from 'react';
+import List from "./List";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+function App(){
+
+
+
+  var [currentItem,setCurrentItem] = useState(null);
+  var onChangeHandler =(e)=>{
+    // console.log("current value",e.target.value);
+    setCurrentItem(e.target.value);
+  };
+
+  var [itemList,updateItemList] = useState([]);
+
+  var addItemToList=()=>{
+    updateItemList([...itemList,{item:currentItem,key:Date.now()}]);
+    // console.log("list items", itemList);
+    setCurrentItem("")
+  }
+
+  return(
+    <div>
+
+      <input type='text' value={currentItem} onChange={onChangeHandler} />
+      <button onClick={addItemToList}>Add</button>
+
+      <List itemList={itemList} />
+
     </div>
-  );
+  )
 }
 
 export default App;
